@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0B0F19">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AlphaHunter">
+<meta name="mobile-web-app-capable" content="yes">
+<title>AlphaHunter — Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:         #0B0F19;
+    --surface:    #141927;
+    --surface-2:  #1C2333;
+    --border:     #252D40;
+    --primary:    #3B82F6;
+    --primary-dk: #2563EB;
+    --success:    #22C55E;
+    --danger:     #EF4444;
+    --warning:    #F59E0B;
+    --text:       #F1F5F9;
+    --muted:      #64748B;
+    --font-h:     'Syne', sans-serif;
+    --font-b:     'DM Sans', sans-serif;
+    --font-m:     'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-b);
+    height: 100%;
+    margin: 0; padding: 0;
+  }
+
+  /* ── APP SHELL (responsive) ── */
+  .phone {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background: var(--bg);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* desktop: sombra lateral suave */
+  @media (min-width: 520px) {
+    body { background: #07090f; display: flex; justify-content: center; }
+    .phone {
+      min-height: 100vh;
+      box-shadow: 0 0 60px rgba(0,0,0,.8), 0 0 0 1px var(--border);
+    }
+  }
+
+  /* ── SCREEN ── */
+  .screen {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 80px;
+    scrollbar-width: none;
+    min-height: 100vh;
+  }
+  .screen::-webkit-scrollbar { display: none; }
+  .screen.active { display: flex; }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: env(safe-area-inset-top, 12px) 20px 12px;
+    padding-top: max(env(safe-area-inset-top, 0px), 12px);
+    position: sticky; top: 0;
+    background: rgba(11,15,25,.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 10;
+    border-bottom: 1px solid var(--border);
+    min-height: 56px;
+  }
+  .header-logo {
+    font-family: var(--font-h);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .header-logo span { color: var(--primary); }
+  .logo-mark {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--primary), #818cf8);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, var(--primary));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+  }
+  .header-back {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 14px; color: var(--primary); cursor: pointer;
+    font-weight: 500;
+  }
+  .header-title {
+    font-family: var(--font-h);
+    font-size: 16px; font-weight: 700;
+  }
+
+  /* ── BODY PAD ── */
+  .body { padding: 16px 20px; display: flex; flex-direction: column; gap: 16px; }
+
+  /* ── ACCOUNT CARD ── */
+  .account-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .account-item label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .account-item .val {
+    font-family: var(--font-m);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .account-item .val.up { color: var(--success); }
+  .account-item .val.dn { color: var(--danger); }
+
+  /* ── SECTION LABEL ── */
+  .sect-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  /* ── DROPDOWN ── */
+  .select-wrap { position: relative; }
+  .select-wrap select {
+    width: 100%;
+    height: 52px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: var(--font-b);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 16px;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .select-wrap select:focus { border-color: var(--primary); }
+  .select-wrap::after {
+    content: '▾';
+    position: absolute; right: 14px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted); pointer-events: none;
+    font-size: 14px;
+  }
+
+  /* ── MODE DESC ── */
+  .mode-desc {
+    background: var(--surface);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    display: flex; gap: 10px;
+    transition: opacity .25s;
+  }
+  .mode-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    width: 100%; height: 52px;
+    background: var(--primary);
+    border: none; border-radius: 10px;
+    color: #fff;
+    font-family: var(--font-h);
+    font-size: 15px; font-weight: 700;
+    letter-spacing: .04em;
+    cursor: pointer;
+    transition: background .2s, transform .1s, box-shadow .2s;
+  }
+  .btn-primary:hover {
+    background: var(--primary-dk);
+    box-shadow: 0 4px 20px rgba(59,130,246,.35);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-danger-outline {
+    width: 100%; height: 40px;
+    background: transparent;
+    border: 1px solid rgba(239,68,68,.4);
+    border-radius: 8px;
+    color: var(--danger);
+    font-family: var(--font-b);
+    font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    transition: background .2s;
+    margin-top: 10px;
+  }
+  .btn-danger-outline:hover { background: rgba(239,68,68,.08); }
+
+  .btn-confirm {
+    width: 100%; height: 56px;
+    background: linear-gradient(135deg, var(--primary), #6366f1);
+    border: none; border-radius: 12px;
+    color: #fff;
+    font-family: var(--font-h);
+    font-size: 16px; font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 24px rgba(59,130,246,.4);
+    transition: transform .1s, box-shadow .2s;
+  }
+  .btn-confirm:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(59,130,246,.5);
+  }
+  .btn-cancel {
+    background: none; border: none;
+    color: var(--muted); font-family: var(--font-b);
+    font-size: 14px; cursor: pointer;
+    text-align: center; padding: 10px;
+    transition: color .2s;
+  }
+  .btn-cancel:hover { color: var(--text); }
+
+  /* ── LOADING SCREEN ── */
+  .loading-wrap {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px; gap: 24px;
+  }
+  .spinner-ring {
+    width: 64px; height: 64px;
+    border: 3px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-title {
+    font-family: var(--font-h);
+    font-size: 22px; font-weight: 700;
+    text-align: center;
+  }
+  .progress-bar-wrap {
+    width: 100%;
+    background: var(--surface-2);
+    border-radius: 6px; height: 6px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #818cf8);
+    border-radius: 6px;
+    width: 0%;
+    transition: width .4s ease;
+  }
+  .progress-pct {
+    font-family: var(--font-m);
+    font-size: 12px; color: var(--muted);
+    text-align: right; margin-top: 4px;
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .step-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: var(--muted);
+    transition: color .3s;
+  }
+  .step-item.done { color: var(--text); }
+  .step-item.active { color: var(--primary); }
+  .step-dot {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--surface-2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; flex-shrink: 0;
+    transition: all .3s;
+  }
+  .step-item.done .step-dot {
+    background: rgba(34,197,94,.15); border-color: var(--success);
+    color: var(--success);
+  }
+  .step-item.active .step-dot {
+    background: rgba(59,130,246,.15); border-color: var(--primary);
+    animation: pulse-dot 1s infinite;
+  }
+  @keyframes pulse-dot {
+    0%,100% { box-shadow: 0 0 0 0 rgba(59,130,246,.4); }
+    50% { box-shadow: 0 0 0 4px rgba(59,130,246,.1); }
+  }
+
+  /* ── RESULTS HEADER ── */
+  .results-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 16px 20px 0;
+  }
+  .results-title {
+    font-family: var(--font-h);
+    font-size: 20px; font-weight: 700;
+  }
+  .live-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--success);
+    animation: pulse-green 2s infinite;
+  }
+  @keyframes pulse-green {
+    0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.5); }
+    50% { box-shadow: 0 0 0 5px rgba(34,197,94,.0); }
+  }
+  .results-sub {
+    font-size: 12px; color: var(--muted);
+    padding: 2px 20px 12px;
+  }
+
+  /* ── CANDIDATE CARD ── */
+  .cand-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color .2s, transform .15s, box-shadow .2s;
+    animation: slide-up .35s ease both;
+  }
+  .cand-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px rgba(59,130,246,.2), 0 8px 32px rgba(0,0,0,.3);
+    transform: translateY(-2px);
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .cand-card:nth-child(1) { animation-delay: .05s; }
+  .cand-card:nth-child(2) { animation-delay: .12s; }
+  .cand-card:nth-child(3) { animation-delay: .19s; }
+  .cand-card:nth-child(4) { animation-delay: .26s; }
+
+  .cand-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .cand-ticker-wrap {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ticker-logo {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    overflow: hidden; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--muted);
+  }
+  .ticker-logo img {
+    width: 100%; height: 100%; object-fit: cover;
+    border-radius: 50%;
+  }
+  .cand-ticker {
+    font-family: var(--font-h);
+    font-size: 18px; font-weight: 800;
+    color: var(--text);
+  }
+  .cand-name { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .cand-right { text-align: right; }
+  .cand-price {
+    font-family: var(--font-m);
+    font-size: 18px; font-weight: 500;
+  }
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 2px 8px; border-radius: 99px;
+    font-size: 11px; font-weight: 600;
+    margin-top: 3px;
+  }
+  .badge-up { background: rgba(34,197,94,.12); color: var(--success); }
+  .badge-dn { background: rgba(239,68,68,.12); color: var(--danger); }
+  .badge-neutral { background: rgba(100,116,139,.12); color: var(--muted); }
+
+  .signal-label {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--muted);
+    margin-bottom: 5px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: .06em;
+  }
+  .signal-label .pct { color: var(--primary); font-family: var(--font-m); }
+  .signal-bar {
+    height: 5px; background: var(--surface-2);
+    border-radius: 3px; overflow: hidden; margin-bottom: 10px;
+  }
+  .signal-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 3px;
+    transition: width 1s cubic-bezier(.16,1,.3,1);
+  }
+
+  .cand-desc {
+    font-size: 12px; color: var(--muted); line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .sl-tp-row {
+    display: flex; gap: 8px; margin-bottom: 12px;
+  }
+  .sl-badge {
+    font-size: 11px; padding: 3px 8px; border-radius: 6px;
+    font-family: var(--font-m);
+  }
+  .sl-badge.sl { background: rgba(239,68,68,.08); color: #fc8181; }
+  .sl-badge.tp { background: rgba(34,197,94,.08); color: #6ee7b7; }
+
+  .btn-enter {
+    width: 100%; height: 42px;
+    background: rgba(59,130,246,.1);
+    border: 1px solid rgba(59,130,246,.3);
+    border-radius: 8px;
+    color: var(--primary);
+    font-family: var(--font-b);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-enter:hover {
+    background: rgba(59,130,246,.2);
+    border-color: var(--primary);
+  }
+
+  /* ── ENTRY SCREEN ── */
+  .entry-asset-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px;
+  }
+  .entry-ticker-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 6px;
+  }
+  .entry-ticker { font-family: var(--font-h); font-size: 22px; font-weight: 800; }
+  .entry-price { font-family: var(--font-m); font-size: 16px; }
+  .entry-name { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .entry-reason { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .invest-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px; padding: 16px;
+  }
+  .invest-input-row {
+    display: flex; align-items: center; gap: 8px; margin: 8px 0;
+  }
+  .invest-symbol {
+    font-family: var(--font-m); font-size: 20px; color: var(--muted);
+  }
+  .invest-input {
+    flex: 1; background: transparent; border: none;
+    font-family: var(--font-m); font-size: 24px; font-weight: 500;
+    color: var(--text); outline: none; width: 100%;
+  }
+  .invest-sub { font-size: 12px; color: var(--muted); }
+
+  .protection-blocks { display: flex; flex-direction: column; gap: 8px; }
+  .prot-block {
+    border-radius: 12px; padding: 13px 14px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .prot-block.sl { background: rgba(239,68,68,.06); border: 1px solid rgba(239,68,68,.15); }
+  .prot-block.tp { background: rgba(34,197,94,.06); border: 1px solid rgba(34,197,94,.15); }
+  .prot-block.ts { background: rgba(59,130,246,.06); border: 1px solid rgba(59,130,246,.15); }
+  .prot-icon { font-size: 20px; flex-shrink: 0; }
+  .prot-title {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+    font-weight: 700; margin-bottom: 3px;
+  }
+  .prot-block.sl .prot-title { color: var(--danger); }
+  .prot-block.tp .prot-title { color: var(--success); }
+  .prot-block.ts .prot-title { color: var(--primary); }
+  .prot-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .prot-price { font-family: var(--font-m); font-weight: 500; }
+  .prot-block.sl .prot-price { color: #fc8181; }
+  .prot-block.tp .prot-price { color: #6ee7b7; }
+  .prot-block.ts .prot-price { color: #93c5fd; }
+
+  .potential-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .pot-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 12px;
+  }
+  .pot-item label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); display: block; margin-bottom: 4px; }
+  .pot-item .pot-val { font-family: var(--font-m); font-size: 16px; font-weight: 500; }
+  .pot-item.up .pot-val { color: var(--success); }
+  .pot-item.dn .pot-val { color: var(--danger); }
+  .rr-row {
+    text-align: center;
+    font-size: 13px; color: var(--muted);
+    background: var(--surface-2);
+    border-radius: 8px; padding: 8px;
+  }
+  .rr-row span { color: var(--text); font-weight: 600; }
+
+  /* ── POSITIONS SCREEN ── */
+  .metrics-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  }
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 10px;
+  }
+  .metric-card label { font-size: 10px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); display: block; margin-bottom: 5px; }
+  .metric-card .m-val { font-family: var(--font-m); font-size: 13px; font-weight: 500; }
+  .metric-card .m-sub { font-size: 10px; color: var(--success); margin-top: 2px; }
+
+  .pos-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 16px;
+  }
+  .pos-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .pos-ticker { font-family: var(--font-h); font-size: 18px; font-weight: 800; }
+  .pos-name { font-size: 11px; color: var(--muted); }
+  .pos-price-row {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;
+  }
+  .pos-entry { font-size: 12px; color: var(--muted); }
+  .pos-arrow { color: var(--muted); font-size: 12px; }
+  .pos-current { font-family: var(--font-m); font-size: 18px; font-weight: 500; }
+  .pos-pnl-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+  }
+  .pos-pnl { font-family: var(--font-m); font-size: 22px; font-weight: 700; }
+  .pos-pnl.up { color: var(--success); }
+  .pos-pnl.dn { color: var(--danger); }
+
+  /* Progress bar SL/TP */
+  .pos-progress-wrap { margin-bottom: 8px; }
+  .pos-bar {
+    height: 8px; background: var(--surface-2);
+    border-radius: 4px; position: relative; overflow: visible;
+    margin: 8px 0;
+  }
+  .pos-bar-fill {
+    height: 100%; border-radius: 4px; position: absolute; top: 0; left: 0;
+  }
+  .pos-bar-fill.up { background: linear-gradient(90deg, rgba(59,130,246,.4), var(--success)); }
+  .pos-bar-fill.dn { background: linear-gradient(90deg, var(--danger), rgba(239,68,68,.4)); }
+  .pos-marker {
+    position: absolute; top: -4px;
+    width: 3px; height: 16px; border-radius: 2px;
+    transform: translateX(-50%);
+  }
+  .pos-marker.sl { background: var(--danger); }
+  .pos-marker.entry { background: var(--muted); }
+  .pos-marker.tp { background: var(--success); }
+  .pos-labels {
+    display: flex; justify-content: space-between;
+    font-size: 9px; color: var(--muted); font-family: var(--font-m);
+    margin-top: 4px;
+  }
+  .pos-protection {
+    font-size: 12px; color: var(--muted); margin-bottom: 2px;
+  }
+  .pos-protection span { font-family: var(--font-m); }
+  .pos-time { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+
+  /* ── NAV BOTTOM ── */
+  .nav-bottom {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 480px;
+    background: rgba(11,15,25,.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-around;
+    padding: 8px 16px env(safe-area-inset-bottom, 8px);
+    padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px);
+    z-index: 20;
+    min-height: 64px;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    cursor: pointer; padding: 6px 16px; border-radius: 10px;
+    transition: background .2s; min-width: 60px;
+  }
+  .nav-item:hover { background: var(--surface-2); }
+  .nav-icon { font-size: 20px; }
+  .nav-label { font-size: 10px; color: var(--muted); font-weight: 500; }
+  .nav-item.active .nav-label { color: var(--primary); }
+  .nav-item.active .nav-icon { filter: drop-shadow(0 0 4px var(--primary)); }
+
+  /* ── DIVIDERS / MISC ── */
+  .divider {
+    height: 1px; background: var(--border);
+    margin: 4px 0;
+  }
+  .section-title {
+    font-family: var(--font-h);
+    font-size: 16px; font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  /* ── SUCCESS OVERLAY ── */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 480px; height: 100vh;
+    background: var(--bg);
+    flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px; padding: 32px; z-index: 100;
+    animation: fade-in .3s ease;
+  }
+  .success-overlay.show { display: flex; }
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+  .check-circle {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(34,197,94,.15); border: 2px solid var(--success);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    animation: bounce-in .5s cubic-bezier(.36,.07,.19,.97) .1s both;
+  }
+  @keyframes bounce-in {
+    0%   { transform: scale(.3); opacity: 0; }
+    50%  { transform: scale(1.08); opacity: 1; }
+    70%  { transform: scale(.95); }
+    100% { transform: scale(1); }
+  }
+  .success-title {
+    font-family: var(--font-h); font-size: 26px; font-weight: 800;
+    text-align: center;
+  }
+  .success-sub { font-size: 14px; color: var(--muted); text-align: center; line-height: 1.6; }
+  .success-info {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px; width: 100%;
+    font-size: 13px; color: var(--muted); line-height: 1.7;
+  }
+  .success-info span { color: var(--text); font-family: var(--font-m); font-weight: 500; }
+
+  /* ── UTILITY ── */
+  .gap-sm { gap: 8px; }
+  .mt-4 { margin-top: 4px; }
+  .mt-8 { margin-top: 8px; }
+  .text-muted { color: var(--muted); }
+  .text-sm { font-size: 12px; }
+  .text-center { text-align: center; }
+
+  /* scrollbar */
+  .screen { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- ══════════════════════════════════════
+       SCREEN 1 — PRINCIPAL
+  ═══════════════════════════════════════ -->
+  <div class="screen active" id="s-home">
+    <div class="header">
+      <div class="header-logo">
+        <div class="logo-mark">α</div>
+        Alpha<span>Hunter</span>
+      </div>
+      <div class="avatar">MX</div>
+    </div>
+
+    <div class="body">
+      <!-- Resumen cuenta -->
+      <div class="account-card">
+        <div class="account-item">
+          <label>Capital disponible</label>
+          <div class="val">$24,850</div>
+        </div>
+        <div class="account-item">
+          <label>P&L hoy</label>
+          <div class="val up">+$312 &nbsp;<span style="font-size:14px">+1.3%</span></div>
+        </div>
+      </div>
+
+      <!-- Selector de modo -->
+      <div>
+        <div class="sect-label">¿Qué tipo de oportunidad buscas hoy?</div>
+        <div class="select-wrap">
+          <select id="mode-select" onchange="updateMode()">
+            <option value="0">Acciones con impulso — subiendo con fuerza</option>
+            <option value="1">Rebote desde zona de apoyo — posible recuperación</option>
+            <option value="2">Cambio de tendencia — de baja a alza</option>
+            <option value="3">Mercado activo — volumen inusual hoy</option>
+            <option value="4">Vista amplia — todas las oportunidades posibles</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Descripción del modo -->
+      <div class="mode-desc" id="mode-desc">
+        <div class="mode-icon">⚡</div>
+        <div id="mode-text">Busca acciones que ya están subiendo con fuerza y tienen respaldo de volumen inusual. Ideal para entradas en tendencia.</div>
+      </div>
+
+      <!-- Botón buscar -->
+      <button class="btn-primary" onclick="startAnalysis()">
+        BUSCAR OPORTUNIDADES
+      </button>
+
+      <div class="text-sm text-muted text-center" style="margin-top:-6px">
+        Última búsqueda: hoy 9:45 AM
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 2 — ANALIZANDO
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="s-loading">
+    <div style="height:20px"></div>
+    <div class="loading-wrap">
+      <div class="spinner-ring"></div>
+      <div class="loading-title">Analizando el<br>mercado...</div>
+
+      <div style="width:100%">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="prog-fill"></div>
+        </div>
+        <div class="progress-pct" id="prog-pct">0%</div>
+      </div>
+
+      <div class="steps" id="step-list">
+        <div class="step-item" id="step-0">
+          <div class="step-dot" id="dot-0">1</div>
+          Filtrando candidatos
+        </div>
+        <div class="step-item" id="step-1">
+          <div class="step-dot" id="dot-1">2</div>
+          Validando con historial
+        </div>
+        <div class="step-item" id="step-2">
+          <div class="step-dot" id="dot-2">3</div>
+          Confirmando con IA...
+        </div>
+        <div class="step-item" id="step-3">
+          <div class="step-dot" id="dot-3">4</div>
+          Preparando resultados
+        </div>
+      </div>
+
+      <div class="text-sm text-muted text-center">
+        Revisando 487 acciones del S&P 500
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 3 — CANDIDATOS
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="s-results">
+    <div class="header">
+      <div class="header-logo">
+        <div class="logo-mark">α</div>
+        Alpha<span>Hunter</span>
+      </div>
+      <div class="avatar">MX</div>
+    </div>
+
+    <div class="results-header">
+      <div class="results-title">4 oportunidades</div>
+      <div class="live-dot"></div>
+    </div>
+    <div class="results-sub">Actualizado: hoy 9:47 AM · Acciones con impulso</div>
+
+    <div class="body" style="padding-top:8px">
+
+      <!-- MSFT -->
+      <div class="cand-card" onclick="openEntry('MSFT','Microsoft Corp','415.20','2.4','82','Subiendo con fuerza: el volumen de hoy triplica el promedio y la tendencia de largo plazo es alcista.','394.44','498.24','microsoft.com')">
+        <div class="cand-top">
+          <div class="cand-ticker-wrap">
+            <div class="ticker-logo"><img src="https://logo.clearbit.com/microsoft.com" alt="MSFT" onerror="this.parentElement.textContent='MS'"></div>
+            <div>
+              <div class="cand-ticker">MSFT</div>
+              <div class="cand-name">Microsoft Corp · NASDAQ</div>
+            </div>
+          </div>
+          <div class="cand-right">
+            <div class="cand-price">$415.20</div>
+            <div><span class="badge badge-up">+2.4% hoy</span></div>
+          </div>
+        </div>
+        <div class="signal-label">
+          <span>Fuerza de la señal</span><span class="pct">82%</span>
+        </div>
+        <div class="signal-bar"><div class="signal-fill" style="width:82%"></div></div>
+        <div class="cand-desc">Subiendo con fuerza: el volumen de hoy triplica el promedio y la tendencia de largo plazo es alcista.</div>
+        <div class="sl-tp-row">
+          <span class="sl-badge sl">SL $394.44</span>
+          <span class="sl-badge tp">TP $498.24</span>
+        </div>
+        <button class="btn-enter">VER Y ENTRAR →</button>
+      </div>
+
+      <!-- NVDA -->
+      <div class="cand-card" onclick="openEntry('NVDA','NVIDIA Corp','875.50','3.1','76','Actividad inusual: volumen 4.2x el promedio. Impulso acaba de fortalecerse en zona de soporte.','831.73','1050.60','nvidia.com')">
+        <div class="cand-top">
+          <div class="cand-ticker-wrap">
+            <div class="ticker-logo"><img src="https://logo.clearbit.com/nvidia.com" alt="NVDA" onerror="this.parentElement.textContent='NV'"></div>
+            <div>
+              <div class="cand-ticker">NVDA</div>
+              <div class="cand-name">NVIDIA Corp · NASDAQ</div>
+            </div>
+          </div>
+          <div class="cand-right">
+            <div class="cand-price">$875.50</div>
+            <div><span class="badge badge-up">+3.1% hoy</span></div>
+          </div>
+        </div>
+        <div class="signal-label">
+          <span>Fuerza de la señal</span><span class="pct">76%</span>
+        </div>
+        <div class="signal-bar"><div class="signal-fill" style="width:76%"></div></div>
+        <div class="cand-desc">Actividad inusual: volumen 4.2x el promedio. Impulso acaba de fortalecerse en zona de soporte.</div>
+        <div class="sl-tp-row">
+          <span class="sl-badge sl">SL $831.73</span>
+          <span class="sl-badge tp">TP $1,050.60</span>
+        </div>
+        <button class="btn-enter">VER Y ENTRAR →</button>
+      </div>
+
+      <!-- AMD -->
+      <div class="cand-card" onclick="openEntry('AMD','Advanced Micro Devices','142.30','1.8','68','Cruzó de tendencia bajista a alcista esta semana. El impulso acaba de cambiar a favor con volumen creciente.','135.19','170.76','amd.com')">
+        <div class="cand-top">
+          <div class="cand-ticker-wrap">
+            <div class="ticker-logo"><img src="https://logo.clearbit.com/amd.com" alt="AMD" onerror="this.parentElement.textContent='AMD'"></div>
+            <div>
+              <div class="cand-ticker">AMD</div>
+              <div class="cand-name">Advanced Micro Devices</div>
+            </div>
+          </div>
+          <div class="cand-right">
+            <div class="cand-price">$142.30</div>
+            <div><span class="badge badge-up">+1.8% hoy</span></div>
+          </div>
+        </div>
+        <div class="signal-label">
+          <span>Fuerza de la señal</span><span class="pct">68%</span>
+        </div>
+        <div class="signal-bar"><div class="signal-fill" style="width:68%"></div></div>
+        <div class="cand-desc">Cruzó de tendencia bajista a alcista esta semana. El impulso acaba de cambiar a favor con volumen creciente.</div>
+        <div class="sl-tp-row">
+          <span class="sl-badge sl">SL $135.19</span>
+          <span class="sl-badge tp">TP $170.76</span>
+        </div>
+        <button class="btn-enter">VER Y ENTRAR →</button>
+      </div>
+
+      <!-- AAPL -->
+      <div class="cand-card" onclick="openEntry('AAPL','Apple Inc','189.40','0.9','61','Tendencia de fondo positiva desde hace meses. Precio en zona de soporte, posible rebote hacia nuevos máximos.','179.93','227.28','apple.com')">
+        <div class="cand-top">
+          <div class="cand-ticker-wrap">
+            <div class="ticker-logo"><img src="https://logo.clearbit.com/apple.com" alt="AAPL" onerror="this.parentElement.textContent='AAPL'"></div>
+            <div>
+              <div class="cand-ticker">AAPL</div>
+              <div class="cand-name">Apple Inc · NASDAQ</div>
+            </div>
+          </div>
+          <div class="cand-right">
+            <div class="cand-price">$189.40</div>
+            <div><span class="badge badge-up">+0.9% hoy</span></div>
+          </div>
+        </div>
+        <div class="signal-label">
+          <span>Fuerza de la señal</span><span class="pct">61%</span>
+        </div>
+        <div class="signal-bar"><div class="signal-fill" style="width:61%"></div></div>
+        <div class="cand-desc">Tendencia de fondo positiva desde hace meses. Precio en zona de soporte, posible rebote hacia nuevos máximos.</div>
+        <div class="sl-tp-row">
+          <span class="sl-badge sl">SL $179.93</span>
+          <span class="sl-badge tp">TP $227.28</span>
+        </div>
+        <button class="btn-enter">VER Y ENTRAR →</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 4 — CONFIRMACIÓN DE ENTRADA
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="s-entry">
+    <div class="header">
+      <div class="header-back" onclick="goTo('s-results')">← Volver</div>
+      <div class="header-title" id="entry-header-title">Entrar en MSFT</div>
+      <div style="width:60px"></div>
+    </div>
+
+    <div class="body">
+      <!-- Resumen activo -->
+      <div class="entry-asset-card">
+        <div class="entry-ticker-row">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="ticker-logo" id="e-logo"><img id="e-logo-img" src="https://logo.clearbit.com/microsoft.com" alt="" onerror="this.parentElement.textContent='MS'"></div>
+            <div class="entry-ticker" id="e-ticker">MSFT</div>
+          </div>
+          <div>
+            <div class="entry-price" id="e-price">$415.20</div>
+            <div style="text-align:right"><span class="badge badge-up" id="e-badge">+2.4% hoy</span></div>
+          </div>
+        </div>
+        <div class="entry-name" id="e-name">Microsoft Corp</div>
+        <div class="entry-reason" id="e-reason">Subiendo con fuerza: el volumen de hoy triplica el promedio y la tendencia de largo plazo es alcista.</div>
+      </div>
+
+      <!-- Cuánto invertir -->
+      <div class="invest-wrap">
+        <div class="sect-label">¿Cuánto quieres invertir?</div>
+        <div class="invest-input-row">
+          <span class="invest-symbol">$</span>
+          <input class="invest-input" id="invest-amount" type="number" value="1000" oninput="updateCalc()">
+        </div>
+        <div class="invest-sub" id="shares-calc">Acciones a comprar: ~2.4 acc · Disponible: $24,850</div>
+      </div>
+
+      <!-- Protección automática -->
+      <div>
+        <div class="sect-label">Protección automática</div>
+        <div class="protection-blocks">
+          <div class="prot-block sl">
+            <div class="prot-icon">🛡️</div>
+            <div>
+              <div class="prot-title">Stop Loss</div>
+              <div class="prot-desc">Si baja a <span class="prot-price" id="e-sl">$394.44</span> (−5%) la posición se cierra sola.</div>
+            </div>
+          </div>
+          <div class="prot-block tp">
+            <div class="prot-icon">🎯</div>
+            <div>
+              <div class="prot-title">Objetivo de ganancia</div>
+              <div class="prot-desc">Si sube a <span class="prot-price" id="e-tp">$498.24</span> (+20%) se toma la ganancia sola.</div>
+            </div>
+          </div>
+          <div class="prot-block ts">
+            <div class="prot-icon">🔒</div>
+            <div>
+              <div class="prot-title">Trailing Stop</div>
+              <div class="prot-desc">Si el precio sube, el piso de protección sube con él. No dejarás que pierdas más de lo que ya ganaste.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Potencial -->
+      <div>
+        <div class="sect-label">Potencial de esta entrada</div>
+        <div class="potential-row" style="margin-bottom:8px">
+          <div class="pot-item up">
+            <label>Ganar hasta</label>
+            <div class="pot-val" id="pot-up">+$200</div>
+            <div style="font-size:10px;color:var(--success)">+20%</div>
+          </div>
+          <div class="pot-item dn">
+            <label>Perder máx</label>
+            <div class="pot-val" id="pot-dn">−$50</div>
+            <div style="font-size:10px;color:var(--danger)">−5%</div>
+          </div>
+        </div>
+        <div class="rr-row">Relación riesgo / beneficio: <span>1 a 4</span></div>
+      </div>
+
+      <!-- Botones -->
+      <button class="btn-confirm" id="confirm-btn" onclick="confirmEntry()">
+        CONFIRMAR ENTRADA — $1,000
+      </button>
+      <button class="btn-cancel" onclick="goTo('s-results')">Cancelar</button>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 5 — POSICIONES ACTIVAS
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="s-positions">
+    <div class="header">
+      <div class="header-logo">
+        <div class="logo-mark">α</div>
+        Alpha<span>Hunter</span>
+      </div>
+      <div class="avatar">MX</div>
+    </div>
+
+    <div class="body">
+      <!-- Métricas -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <label>Capital</label>
+          <div class="m-val">$25,162</div>
+        </div>
+        <div class="metric-card">
+          <label>Hoy</label>
+          <div class="m-val" style="color:var(--success)">+$312</div>
+          <div class="m-sub">+1.3%</div>
+        </div>
+        <div class="metric-card">
+          <label>Total</label>
+          <div class="m-val" style="color:var(--success)">+$1,842</div>
+          <div class="m-sub">+7.9%</div>
+        </div>
+      </div>
+
+      <div class="section-title">2 posiciones abiertas</div>
+
+      <!-- MSFT — ganando -->
+      <div class="pos-card">
+        <div class="pos-header">
+          <div>
+            <div class="pos-ticker">MSFT</div>
+            <div class="pos-name">Microsoft Corp</div>
+          </div>
+          <span class="badge badge-up">EN GANANCIA</span>
+        </div>
+        <div class="pos-price-row">
+          <span class="pos-entry">$415.20</span>
+          <span class="pos-arrow">→</span>
+          <span class="pos-current">$428.40</span>
+        </div>
+        <div class="pos-pnl-row">
+          <div class="pos-pnl up">+$31.68</div>
+          <span class="badge badge-up">+3.2%</span>
+        </div>
+        <!-- Barra visual -->
+        <div class="pos-progress-wrap">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:4px">Progreso hacia el objetivo</div>
+          <div class="pos-bar" style="height:8px;background:var(--surface-2);border-radius:4px;position:relative">
+            <!-- fill verde desde SL hasta actual (~19% del rango SL-TP) -->
+            <div class="pos-bar-fill up" style="width:19%"></div>
+            <!-- marcadores -->
+            <div class="pos-marker sl" style="left:0%"></div>
+            <div class="pos-marker entry" style="left:10%"></div>
+            <div class="pos-marker tp" style="left:100%"></div>
+          </div>
+          <div class="pos-labels">
+            <span>SL $394</span><span>Entrada $415</span><span>TP $498</span>
+          </div>
+        </div>
+        <div class="pos-protection">Trailing activo: piso en <span>$407.00</span> (sube con el precio)</div>
+        <div class="pos-time">Abierta hace 2 días</div>
+        <button class="btn-danger-outline">Cerrar posición</button>
+      </div>
+
+      <!-- NVDA — perdiendo -->
+      <div class="pos-card">
+        <div class="pos-header">
+          <div>
+            <div class="pos-ticker">NVDA</div>
+            <div class="pos-name">NVIDIA Corp</div>
+          </div>
+          <span class="badge badge-dn">EN PÉRDIDA</span>
+        </div>
+        <div class="pos-price-row">
+          <span class="pos-entry">$890.00</span>
+          <span class="pos-arrow">→</span>
+          <span class="pos-current" style="color:var(--danger)">$871.20</span>
+        </div>
+        <div class="pos-pnl-row">
+          <div class="pos-pnl dn">−$37.60</div>
+          <span class="badge badge-dn">−2.1%</span>
+        </div>
+        <!-- Barra visual -->
+        <div class="pos-progress-wrap">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:4px">Distancia al stop loss</div>
+          <div class="pos-bar" style="height:8px;background:var(--surface-2);border-radius:4px;position:relative">
+            <div class="pos-bar-fill dn" style="width:36%"></div>
+            <div class="pos-marker sl" style="left:0%"></div>
+            <div class="pos-marker entry" style="left:55%"></div>
+            <div class="pos-marker tp" style="left:100%"></div>
+          </div>
+          <div class="pos-labels">
+            <span>SL $845</span><span>Entrada $890</span><span>TP $1,068</span>
+          </div>
+        </div>
+        <div class="pos-protection">Stop loss activo: <span>$845.50</span> · Se cierra sola si llega ahí</div>
+        <div class="pos-time">Abierta hace 1 día</div>
+        <button class="btn-danger-outline">Cerrar posición</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SUCCESS OVERLAY
+  ═══════════════════════════════════════ -->
+  <div class="success-overlay" id="success-overlay">
+    <div class="check-circle">✓</div>
+    <div class="success-title">¡Entrada registrada!</div>
+    <div class="success-sub" id="success-sub">Compraste MSFT a $415.20<br>por $1,000.00</div>
+    <div class="success-info">
+      Tu protección está activa:<br>
+      Salida automática si baja: <span id="success-sl">$394.44</span><br>
+      Objetivo de ganancia: <span id="success-tp">$498.24</span><br>
+      Trailing stop: activado ✓
+    </div>
+    <button class="btn-primary" onclick="goTo('s-positions');document.getElementById('success-overlay').classList.remove('show')">
+      Ver mis posiciones activas
+    </button>
+    <button class="btn-cancel" onclick="goTo('s-results');document.getElementById('success-overlay').classList.remove('show')">
+      Buscar más oportunidades
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       NAV BOTTOM (global)
+  ═══════════════════════════════════════ -->
+  <div class="nav-bottom">
+    <div class="nav-item active" id="nav-home" onclick="goTo('s-home');setNav('nav-home')">
+      <div class="nav-icon">🔍</div>
+      <div class="nav-label">Buscar</div>
+    </div>
+    <div class="nav-item" id="nav-pos" onclick="goTo('s-positions');setNav('nav-pos')">
+      <div class="nav-icon">📊</div>
+      <div class="nav-label">Mis Trades</div>
+    </div>
+    <div class="nav-item" id="nav-hist" onclick="alert('Historial — próximamente')">
+      <div class="nav-icon">📒</div>
+      <div class="nav-label">Historial</div>
+    </div>
+  </div>
+
+</div><!-- /phone -->
+
+<script>
+// ── NAVIGATION
+const screens = ['s-home','s-loading','s-results','s-entry','s-positions'];
+
+function goTo(id) {
+  screens.forEach(s => {
+    const el = document.getElementById(s);
+    el.classList.remove('active');
+    el.scrollTop = 0;
+  });
+  document.getElementById(id).classList.add('active');
+  if (id === 's-home' || id === 's-results') setNav('nav-home');
+  if (id === 's-positions') setNav('nav-pos');
+}
+
+function setNav(active) {
+  ['nav-home','nav-pos','nav-hist'].forEach(n => {
+    document.getElementById(n).classList.remove('active');
+  });
+  document.getElementById(active).classList.add('active');
+}
+
+// ── MODE DESCRIPTIONS
+const modes = [
+  { icon:'⚡', text:'Busca acciones que ya están subiendo con fuerza y tienen respaldo de volumen inusual. Ideal para entradas en tendencia.' },
+  { icon:'🔄', text:'Detecta acciones que cayeron más de lo normal y muestran señales de recuperación. Buenas entradas con margen de ganancia amplio.' },
+  { icon:'🌅', text:'Identifica activos que acaban de cambiar de tendencia bajista a alcista. Las mejores entradas al inicio de un nuevo movimiento.' },
+  { icon:'🌊', text:'Encuentra acciones con volumen muy por encima del promedio hoy. Alguien grande está moviendo dinero.' },
+  { icon:'🗺️', text:'Vista completa del mercado sin filtros restrictivos. Muestra todas las señales activas, débiles o fuertes.' },
+];
+
+function updateMode() {
+  const sel = document.getElementById('mode-select').value;
+  const m = modes[sel];
+  document.getElementById('mode-desc').querySelector('.mode-icon').textContent = m.icon;
+  document.getElementById('mode-text').textContent = m.text;
+}
+
+// ── ANALYSIS ANIMATION
+function startAnalysis() {
+  goTo('s-loading');
+  const fill = document.getElementById('prog-fill');
+  const pct  = document.getElementById('prog-pct');
+  const steps = [0,1,2,3];
+
+  // reset
+  steps.forEach(i => {
+    const s = document.getElementById('step-'+i);
+    const d = document.getElementById('dot-'+i);
+    s.classList.remove('done','active');
+    d.textContent = i+1;
+  });
+  fill.style.width = '0%';
+  pct.textContent = '0%';
+
+  const timeline = [
+    { delay: 300,  prog: 25, step: 0, done: [] },
+    { delay: 900,  prog: 50, step: 1, done: [0] },
+    { delay: 1600, prog: 75, step: 2, done: [0,1] },
+    { delay: 2300, prog: 95, step: 3, done: [0,1,2] },
+    { delay: 3000, prog: 100, step: -1, done: [0,1,2,3] },
+  ];
+
+  timeline.forEach(t => {
+    setTimeout(() => {
+      fill.style.width = t.prog + '%';
+      pct.textContent = t.prog + '%';
+      t.done.forEach(i => {
+        const s = document.getElementById('step-'+i);
+        const d = document.getElementById('dot-'+i);
+        s.classList.add('done');
+        s.classList.remove('active');
+        d.textContent = '✓';
+      });
+      if (t.step >= 0) {
+        document.getElementById('step-'+t.step).classList.add('active');
+      }
+      if (t.prog === 100) {
+        setTimeout(() => goTo('s-results'), 300);
+      }
+    }, t.delay);
+  });
+}
+
+// ── OPEN ENTRY
+function openEntry(ticker, name, price, change, signal, reason, sl, tp, domain) {
+  document.getElementById('entry-header-title').textContent = 'Entrar en ' + ticker;
+  document.getElementById('e-ticker').textContent = ticker;
+  document.getElementById('e-price').textContent = '$' + price;
+  document.getElementById('e-badge').textContent = '+' + change + '% hoy';
+  document.getElementById('e-name').textContent = name;
+  document.getElementById('e-reason').textContent = reason;
+  document.getElementById('e-sl').textContent = '$' + sl;
+  document.getElementById('e-tp').textContent = '$' + tp;
+  // logo
+  const img = document.getElementById('e-logo-img');
+  const logoWrap = document.getElementById('e-logo');
+  if (domain) {
+    logoWrap.innerHTML = '<img src="https://logo.clearbit.com/' + domain + '" alt="' + ticker + '" onerror="this.parentElement.textContent=\'' + ticker.slice(0,2) + '\'">';
+  }
+
+  // store for calc
+  window._entryData = { ticker, price: parseFloat(price), sl, tp };
+  document.getElementById('invest-amount').value = 1000;
+  updateCalc();
+  goTo('s-entry');
+}
+
+function updateCalc() {
+  const amt = parseFloat(document.getElementById('invest-amount').value) || 0;
+  const price = window._entryData ? window._entryData.price : 415.20;
+  const shares = (amt / price).toFixed(1);
+  document.getElementById('shares-calc').textContent =
+    'Acciones a comprar: ~' + shares + ' acc · Disponible: $24,850';
+  const up = (amt * 0.20).toFixed(0);
+  const dn = (amt * 0.05).toFixed(0);
+  document.getElementById('pot-up').textContent = '+$' + up;
+  document.getElementById('pot-dn').textContent = '−$' + dn;
+  document.getElementById('confirm-btn').textContent =
+    'CONFIRMAR ENTRADA — $' + amt.toLocaleString('es');
+}
+
+function confirmEntry() {
+  const d = window._entryData;
+  const amt = document.getElementById('invest-amount').value;
+  document.getElementById('success-sub').innerHTML =
+    'Compraste ' + d.ticker + ' a $' + d.price.toFixed(2) + '<br>por $' + parseFloat(amt).toLocaleString('es');
+  document.getElementById('success-sl').textContent = '$' + d.sl;
+  document.getElementById('success-tp').textContent = '$' + d.tp;
+  document.getElementById('success-overlay').classList.add('show');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+*.pkl
+data/cache/
+data/models/
+.streamlit/
+.venv/
+venv/
+node_modules/
+*.log

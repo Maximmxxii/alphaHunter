@@ -1,0 +1,12 @@
+.venv/
+data/
+data/*.db
+__pycache__/
+*.pyc
+*.pyo
+.git/
+.env
+frontend/
+dashboard/
+tests/
+*.md
