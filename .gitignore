@@ -9,3 +9,6 @@ data/models/
 venv/
 node_modules/
 *.log
+.last_ip
+data/
+certs/
